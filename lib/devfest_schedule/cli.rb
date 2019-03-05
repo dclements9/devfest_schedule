@@ -1,0 +1,4 @@
+class DevfestSchedule::CLI
+
+    
+end

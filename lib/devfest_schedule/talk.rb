@@ -1,0 +1,4 @@
+class DevFestSchedule::Talk
+
+    
+end
