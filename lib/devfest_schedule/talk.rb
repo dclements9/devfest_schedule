@@ -17,15 +17,20 @@ require 'open-uri'
 ### Title, Speaker, & Session ID (For Description comparison to assign)
     def self.scrape_talks   
         schedule = Nokogiri::HTML(open("https://devfest.gdgcapitalregion.com/schedule/"))
-        schedule.css("div.slot.col-md-4.col-xs-12.flexbox-item-height").each do |element|  
-            talk = self.new
+        schedule.css("div.slot.col-md-4.col-xs-12.flexbox-item-height").each do |element| 
+            #binding.pry
+            
+            
+            # talk = self.new
             ## TODO: Filter "No Speaker"
-            if element.css("h5.slot-title").text != ""     
+            # How does it execute even if false..?1?1?1?1?1?
+            if element.css("h5.slot-title").text != "" || element.css("h5.slot-title").text != "No Speaker"    
+                talk = self.new
                 talk.title = element.css("h5.slot-title").text
                 talk.speaker = element.css("p.speaker-name").text 
                 if element.attribute('id') != nil
-                    session_id = element.attribute('id').value
-                    talk.session_id = session_id.gsub(/\D/, "")
+                    talk.session_id = element.attribute('id').value
+                    talk.session_id = talk.session_id.gsub(/\D/, "")
                 end
             end
 ### Descriptions
@@ -48,7 +53,7 @@ require 'open-uri'
             all.each do |object|
                 time.css("h5.slot-title").each do |slot_title|
                     if slot_title.text === talk.title
-                        talk.start_time = (time.css("time.start-time").attribute("datetime").value).gsub('October 27T', " ")
+                        talk.start_time = (time.css("time.start-time").attribute("datetime").value).gsub('October 27T', "")
                         talk.end_time = (time.css("time.end-time").attribute("datetime").value).gsub('October 27T', " ")
                     end
                 end
@@ -57,7 +62,7 @@ require 'open-uri'
     end
 ## Instance tests
     #binding.pry
-    talk
+    # talk
         end    
 ## Test @@all
         #binding.pry 

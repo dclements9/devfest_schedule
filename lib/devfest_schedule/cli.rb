@@ -3,7 +3,21 @@ class DevfestSchedule::CLI
     @@display_array = []
     @@description_array = []
     ## Test for now. Will be hash {time:talk}
-    @@user_schedule = []
+    #@@user_schedule = []
+
+    @@user_schedule = {"9:30" => nil,
+        "10:30" => nil,
+        "11:30" => nil,
+        "2:00" => nil,
+        "3:00" => nil,
+        "4:00" => nil}
+  
+# 930 - 1020
+# 1030 -1120
+# 1130 - 1220
+# 200 - 250
+# 300 - 350
+# 400 - 450
 
     def call
         welcome
@@ -11,47 +25,78 @@ class DevfestSchedule::CLI
 
     def welcome
         puts "Welcome to the DevFest Talks Schedule CLI."
-        puts "Please select a talk from below to build your schedule and for further description."
-        # Displays Time, Title, By Speaker, & Option for further description(Next Level).
+        puts "Please select a talk from below to build your schedule and for further description:"
         display_dev_schedule 
     end
 
     def display_dev_schedule
-        ## TODO: Seperate display from rest of method in seperate method.
+        counter = 1
         DevfestSchedule::Talk.all.each do |talk|
-            @@display_array << "#{talk.start_time} -#{talk.end_time} - #{talk.title} By: #{talk.speaker}"
-            @@description_array << "#{talk.description}"
+            puts "#{counter}. #{talk.start_time} -#{talk.end_time} - #{talk.title} By: #{talk.speaker}"
+            counter+=1
         end
-        ## Displays array values with index 
-        @@display_array.each.with_index(1) {|talk, i| puts "#{i}. #{talk} "}
+        user_interaction
+    end
 
-        puts "Select which talk you would like more information on by number:"
-        talk_selection_input = (gets.strip).to_i
+    ### Access via input conversion to array index.
+    def display_description(selected_index)
+        DevfestSchedule::Talk.all[selected_index-1].description
+    end
 
-        ### Test for working. Need seperate method?
+    def user_interaction
+        talk_selection_input = nil
+        replace_input = nil
+        ### Exit command test
+    
+        puts "Select which talk you would like more information on by number or type 'exit' to quit:"
+            talk_selection_input = (gets.strip).to_i
+        # if talk_selection_input == "exit"
+        #     exit_program
+        # else
+        #while talk_selection_input != "exit"
+#while talk_selection_input != exit
         if talk_selection_input.to_i >= 1 && talk_selection_input.to_i < 18
-            puts "Description: #{@@description_array[talk_selection_input-1]}"
+            puts "Description:"
+            puts display_description(talk_selection_input)
             puts "Would you like to put this in your schedule? (y/n)"
             entry_input = gets.strip.downcase
             if entry_input == "y"
-                @@user_schedule << @@display_array[talk_selection_input-1]
-
-
-                # @@user_schedule.map do |time_slot, talk|
-                #     ## Possibly need talk selection to be hash?
-                #     if time_slot == ?
-                #         talk = @@display_array[talk_selection_input-1]
-                #     end
-                # end
-
-
+                #binding.pry
+                @@user_schedule.each do |slot_time, talk|
+                    #binding.pry
+                    if talk != nil 
+                        puts "This time slot has already been filled."
+                        puts "Would you like to replace this slot time? (y/n)"
+                        replace_input = gets.strip.downcase
+                        if replace_input == "y"
+                            if DevfestSchedule::Talk.all[talk_selection_input-1].start_time == slot_time
+                                @@user_schedule[slot_time]= talk = "#{DevfestSchedule::Talk.all[talk_selection_input-1].title}, By: #{DevfestSchedule::Talk.all[talk_selection_input-1].speaker}"
+                                #binding.pry
+                            end
+                        elsif replace_input == "n"
+                            puts "Okay. Returning to menu."
+                            display_dev_schedule
+                        else
+                            puts "Invalid entry. Please try again."
+                        end
+                    else
+                        if DevfestSchedule::Talk.all[talk_selection_input-1].start_time == slot_time
+                            @@user_schedule[slot_time]= talk = "#{DevfestSchedule::Talk.all[talk_selection_input-1].title}, By: #{DevfestSchedule::Talk.all[talk_selection_input-1].speaker}"
+                            #@@user_schedule[slot_time]= talk = DevfestSchedule::Talk.all[talk_selection_input-1]
+                            #binding.pry
+                        end
+                    end
+                end
+                #binding.pry
                 puts @@user_schedule
+## Uncomment when exit command created.
+                display_dev_schedule
             elsif entry_input == "n"
                 puts "Okay. Returning to menu."
                 
                 display_dev_schedule
             else
-                "Invalid entry. Returning to menu."
+                puts "Invalid entry. Returning to menu."
                 # need better return to menu
                 display_dev_schedule
             end
@@ -60,8 +105,14 @@ class DevfestSchedule::CLI
             # need better return to menu
             display_dev_schedule
         end
+    # While exit end
+        end
+    
+   # end
+    def exit_program
+        puts "Thank you for using the Devfest Schedule CLI."
+        puts "Have a nice day!"
     end
-
     ## Presents devfest schedule. Let's user see further description.
     ## Has user select which talks to go to depending on time block.
     ## If user's schedule hash already has block inside. Warns user there is already a talk selected.
