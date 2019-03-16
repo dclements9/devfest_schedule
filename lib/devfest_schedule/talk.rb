@@ -54,7 +54,7 @@ require 'open-uri'
                 time.css("h5.slot-title").each do |slot_title|
                     if slot_title.text === talk.title
                         talk.start_time = (time.css("time.start-time").attribute("datetime").value).gsub('October 27T', "")
-                        talk.end_time = (time.css("time.end-time").attribute("datetime").value).gsub('October 27T', " ")
+                        talk.end_time = (time.css("time.end-time").attribute("datetime").value).gsub('October 27T', "")
                     end
                 end
             end 
