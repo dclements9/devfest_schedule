@@ -22,7 +22,7 @@ class DevfestSchedule::UserSchedule
     def self.view
         puts "Your schedule: "
         schedule.each do |time_slot, talk|
-            puts "#{time_slot}, #{schedule[time_slot]}"
+            puts "#{time_slot}: #{schedule[time_slot]}"
         end
     end
 end
