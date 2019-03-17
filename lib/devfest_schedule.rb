@@ -1,4 +1,3 @@
-#require "devfest_schedule/version"
 require 'nokogiri'
 require 'pry'
 require 'open-uri'

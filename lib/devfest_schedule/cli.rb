@@ -1,8 +1,5 @@
 class DevfestSchedule::CLI
 
-    @@display_array = []
-    @@description_array = []
-
     def call
         welcome
         display_dev_schedule
@@ -34,7 +31,7 @@ class DevfestSchedule::CLI
             talk_selection_input = gets.strip
         if talk_selection_input == "exit"
             exit_program
-        elsif talk_selection_input.to_i >= 1 && talk_selection_input.to_i < 17
+        elsif talk_selection_input.to_i > 0 && talk_selection_input.to_i < 18
             add_interaction(talk_selection_input.to_i)
         else 
             puts "Not a valid entry. Please try again."
@@ -44,23 +41,23 @@ class DevfestSchedule::CLI
 
     def add_interaction(selection_input)
         puts "Description:"
-            puts display_description(selection_input)
-            puts "Would you like to put this in your schedule? (y/n)"
-            entry_input = gets.strip.downcase
-            if entry_input == "y"
-                DevfestSchedule::UserSchedule.schedule.each do |slot_time, talk|
-                    DevfestSchedule::UserSchedule.add (DevfestSchedule::Talk.all[selection_input-1])                                        
-                end
-                selection_input = nil
-                DevfestSchedule::UserSchedule.view
-                display_dev_schedule
-            elsif entry_input == "n"
-                puts "Okay. Returning to menu."
-                display_dev_schedule
-            else
-                puts "Invalid entry. Returning to menu."
-                display_dev_schedule
+        puts display_description(selection_input)
+        puts "Would you like to put this in your schedule? (y/n)"
+        entry_input = gets.strip.downcase
+        if entry_input == "y"
+            DevfestSchedule::UserSchedule.schedule.each do |slot_time, talk|
+                DevfestSchedule::UserSchedule.add (DevfestSchedule::Talk.all[selection_input-1])                                     
             end
+            selection_input = nil
+            DevfestSchedule::UserSchedule.view
+            display_dev_schedule
+        elsif entry_input == "n"
+            puts "Okay. Returning to menu."
+            display_dev_schedule
+        else
+            puts "Invalid entry. Returning to menu."
+            display_dev_schedule
+        end
     end
 
     def exit_program

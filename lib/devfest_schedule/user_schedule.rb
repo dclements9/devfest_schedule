@@ -1,6 +1,6 @@
 class DevfestSchedule::UserSchedule
 
-@@schedule = {"9:30" => nil,
+    @@schedule = {"9:30" => nil,
         "10:30" => nil,
         "11:30" => nil,
         "2:00" => nil,
