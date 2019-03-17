@@ -11,7 +11,7 @@ execute bundle install
 Confirm executable permissions for /bin/devfest_schedule (Can be changed with chmod +x)
 
 ```ruby
-./bin/devfest_schedule
+execute ./bin/devfest_schedule
 ```
 ## Development
 
