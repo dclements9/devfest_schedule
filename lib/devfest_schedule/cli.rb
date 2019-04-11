@@ -48,6 +48,8 @@ class DevfestSchedule::CLI
         entry_input = gets.strip.downcase
         if entry_input == "y"
             DevfestSchedule::UserSchedule.schedule.each do |slot_time, talk|
+
+# User Schedule add point 
                 DevfestSchedule::UserSchedule.add (DevfestSchedule::Talk.all[selection_input-1])                                     
             end
             selection_input = nil
