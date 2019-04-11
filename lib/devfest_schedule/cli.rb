@@ -31,6 +31,7 @@ class DevfestSchedule::CLI
             talk_selection_input = gets.strip
         if talk_selection_input == "exit"
             exit_program
+            
         #elsif talk_selection_input.to_i > 0 && talk_selection_input.to_i < 18
         elsif talk_selection_input.to_i.between?(0,18) 
             add_interaction(talk_selection_input.to_i)
