@@ -4,18 +4,27 @@ Devfest Schedule CLI scrapes and displays the schedule for GDG DevFest Capital R
 
 ## Installation
 
+After cloning:
+
 ```ruby
-execute bundle install
+bundle install
 ```
 
 Confirm executable permissions for /bin/devfest_schedule (Can be changed with chmod +x)
 
 ```ruby
-execute ./bin/devfest_schedule
+cd bin
+chmod +x devfest_schedule
+```
+## How to Use
+Execute CLI with
+
+```ruby
+./bin/devfest_schedule
 ```
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+You can run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To release a new version, update the version number in `version.rb`. Push git commits and tags.
 
