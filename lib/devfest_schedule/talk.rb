@@ -11,8 +11,9 @@ class DevfestSchedule::Talk
         @@all
     end
 ### Title, Speaker, & Session ID (For Description comparison to assign)
-    def self.scrape_talks   
-        schedule = Nokogiri::HTML(open("https://devfest.gdgcapitalregion.com/schedule/"))
+    def self.scrape_talks
+        
+        schedule = Nokogiri::HTML(open("https://devfest18.gdgcapitalregion.com/"))
         schedule.css("div.slot.col-md-4.col-xs-12.flexbox-item-height").each do |element| 
 
             if (element.css("h5.slot-title").text != "") && (element.css("h5.slot-title").text != "No Speaker")

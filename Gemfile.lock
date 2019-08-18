@@ -2,15 +2,24 @@ PATH
   remote: .
   specs:
     devfest_schedule (0.1.0)
+      nokogiri
+      pry
 
 GEM
   remote: https://rubygems.org/
   specs:
+    coderay (1.1.2)
+    method_source (0.9.2)
+    mini_portile2 (2.4.0)
+    nokogiri (1.10.4)
+      mini_portile2 (~> 2.4.0)
+    pry (0.12.2)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
     rake (10.5.0)
 
 PLATFORMS
   ruby
-  x64-mingw32
 
 DEPENDENCIES
   bundler
@@ -18,4 +27,4 @@ DEPENDENCIES
   rake (~> 10.0)
 
 BUNDLED WITH
-   1.17.2
+   2.0.2
