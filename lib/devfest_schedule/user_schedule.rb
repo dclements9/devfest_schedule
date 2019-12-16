@@ -20,9 +20,9 @@ class DevfestSchedule::UserSchedule
     end
 
     def self.view
-        puts "Your schedule: "
+        puts "Your schedule: ".green
         schedule.each do |time_slot, talk|
-            puts "#{time_slot}: #{schedule[time_slot]}"
+            puts "#{time_slot}:".magenta + " #{schedule[time_slot]}"
         end
     end
 end
